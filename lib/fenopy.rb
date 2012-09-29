@@ -11,6 +11,10 @@ module Fenopy
  		options = {} if options.nil?
  		options[:format] = 'json'
  		options[:keyword] = query
- 		JSON.parse(Nestful.get(BASE_URL, :params => options)).collect { |torrent| Torrent.new(torrent) }
+ 		begin
+ 			JSON.parse(Nestful.get(BASE_URL, :params => options)).collect { |torrent| Torrent.new(torrent) }
+		rescue
+			[]
+		end
 	end
 end
